@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% for visit in visits %}
+    {{visit}}
+    {% endfor %}
+    <div class="block_content" style="height: 80vh ;">
+        <div class="form_div">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for message in messages %}
+                    <p class="message_error">{{message}}</p>
+                {% endfor %}
+                <input type="submit" class="form_button">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

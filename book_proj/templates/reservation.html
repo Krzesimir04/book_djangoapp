@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="block_content" style="height: 80vh ;">
+        <div class="form_div">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.Day.label}}
+                {{form.Day}}
+                {% for message in messages %}
+                    <p class="message_error">{{message}}</p>
+                {% endfor %}
+                <input type="submit" class="form_button">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

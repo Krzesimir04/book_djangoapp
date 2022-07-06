@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="block_content" style="height: 80vh ;">
+        <div class="form_div">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.username.label}}
+                {{form.username}}
+                {{form.email.label}}
+                {{form.email}}
+                {{form.password1.label}}
+                {{form.password1}}
+                {{form.password2.label}}
+                {{form.password2}}
+
+                {% for message in messages %}
+                    <p class="message_error">{{message}}</p>
+                {% endfor %}
+                <input type="submit" class="form_button">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
