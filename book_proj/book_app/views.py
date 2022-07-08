@@ -107,8 +107,8 @@ def reservation_2(request,day):
     elif request.method=='GET':
         form=Reservation_form()
         if not visits.exists():
-            for i in range(0,8):
-                time=str(7+i)+':00'
+            for i in range(7,15):
+                time=str(i)+':00'
                 Visit.objects.create(User=None,Day=day,Term=time,Visit_length=1.0)
             visits=Visit.objects.filter(Day=day)
     else:
