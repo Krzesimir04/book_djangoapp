@@ -1,10 +1,12 @@
 from django.contrib.auth import login,logout
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Visit
+import datetime
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -17,11 +19,15 @@ def login_view(request):
             email=login_form.cleaned_data.get("email")
             password=login_form.cleaned_data.get("password")
             try:
-                user=User.objects.get(email=email, password=password)
-                login(request, user)
-                return redirect('index')
-            except User.DoesNotExist:
-                messages.error(request,'Email or password doesn\'t match')
+                user=User.objects.get(email=email)
+                if check_password(password,encoded=user.password):
+                    login(request, user)
+                    return redirect('index')
+                else:
+                    messages.error(request,'Email or password doesn\'t match')
+                    return redirect('login')
+            except (User.DoesNotExist, IndexError):
+                messages.error(request,'User with that email does not exist')
                 return redirect('login')
         else:
             messages.error(request,'Form is not valid')
@@ -66,16 +72,58 @@ def reservation(request):
     if request.method=='POST':
         form=Day_of_visit(request.POST)
         if form.is_valid():
-            date=form.cleaned_data.get('Day')
-            return redirect(f'reservation/{date}')
+            day=form.cleaned_data.get('Day')
+            return redirect(f'reservation/{day}')
         else:
-            messages.error(request, 'form is not valid')
+            messages.error(request, 'form is not valid, you have to choose the future date')
             return redirect('reservation')
     else:
         form=Day_of_visit()
     return render (request, 'reservation.html',{'form':form})
 
 @login_required(login_url='login')
-def reservation_2(request,date):
-    visits=Visit.objects.filter(Day=date)
-    return render(request,'reservation_2.html',{'visits':visits})
+def reservation_2(request,day):
+    visits=Visit.objects.filter(Day=day)
+    if request.method=='POST':
+        form=Reservation_form(request.POST)
+        if form.is_valid():
+            Term=form.cleaned_data.get('Term')
+            Visit_length=float(form.cleaned_data.get('Visit_length'))
+            reservation_visit=Visit.objects.filter(Day=day,Term=Term)
+            try:
+                if reservation_visit[0].User is None:
+                    if Visit_length <= 1.0:
+                        reservation_visit.update(User=request.user,Term=Term, Visit_length=Visit_length)
+                    else:
+                        reservation_visit.update(User=request.user,Term=Term, Visit_length=1.0,Combined_id=reservation_visit[0].id+1)
+                        new_term=datetime.time(Term.hour+1)
+                        new_visit=Visit.objects.filter(Day=day, Term=new_term)
+                        new_visit.update(User=request.user,Term=new_term,Visit_length=(-1+Visit_length),Combined_id=reservation_visit[0].id)
+                else:
+                    messages.error(request,'This term is reserved choose other.')
+            except IndexError:
+                messages.error(request,'Choose right hour, for example 9:00, 10:00')
+            
+    elif request.method=='GET':
+        form=Reservation_form()
+        if not visits.exists():
+            for i in range(0,8):
+                time=str(7+i)+':00'
+                Visit.objects.create(User=None,Day=day,Term=time,Visit_length=1.0)
+            visits=Visit.objects.filter(Day=day)
+    else:
+        return redirect('index')
+
+    return render(request,'reservation_2.html',{'visits':visits,'form':form})
+
+def cancel(request,day,pk):
+    visit=Visit.objects.filter(id=pk,User=request.user)
+    if visit[0].Combined_id == None:
+        visit.update(User=None,Visit_length=1.0,Combined_id=None)
+    else:
+        visit_2=Visit.objects.filter(id=visit[0].Combined_id)
+        visit.update(User=None,Visit_length=1.0,Combined_id=None)
+        visit_2.update(User=None,Visit_length=1.0,Combined_id=None)
+
+    messages.info(request,'Visit canceled')
+    return redirect(f'/reservation/{day}')

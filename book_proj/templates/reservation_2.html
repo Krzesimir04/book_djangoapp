@@ -3,20 +3,39 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="content">
-    {% for visit in visits %}
-    {{visit}}
-    {% endfor %}
-    <div class="block_content" style="height: 80vh ;">
-        <div class="form_div">
-            <form action="" method="post">
-                {% csrf_token %}
-                {% for message in messages %}
-                    <p class="message_error">{{message}}</p>
-                {% endfor %}
-                <input type="submit" class="form_button">
-            </form>
-        </div>
+<div class="content" style="align-items: start; flex-direction: row;">
+    <div class="visits">
+        {% for visit in visits %}
+        {% if visit.User is not None %}
+            {% if visit.User == request.user %}
+                <div class="visit_div", style="background-color: rgb(144, 245, 93);">
+                    <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>{{visit.Visit_length | floatformat:"-1"}}h</p>
+                    <a href="{% url 'cancel' visit.Day visit.id %}">Cancel</a>
+                </div>
+            {% else %}
+                <div class="visit_div", style="background-color: rgb(245, 93, 93);">
+                    <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>Reserved</p>
+                </div>
+            {% endif %}
+        {% else %}
+                <div class="visit_div">
+                    <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>Free term</p>
+                    
+                </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    
+    <div class="form_div">
+        <p>Make a reservation</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form}}
+            {% for message in messages %}
+                <p class="message_error">{{message}}</p>
+            {% endfor %}
+            <input type="submit" class="form_button">
+        </form>
     </div>
 </div>
 {% endblock %}

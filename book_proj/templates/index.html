@@ -16,7 +16,12 @@
             <li class="nav_link"><a href="{% url 'index' %}#about_me">About me</a></li>
             <li class="nav_link"><a href="{% url 'index' %}#contact">Contact</a></li>
             {% if user.is_authenticated %}
-            <li class="nav_link"><a href="{% url 'reservation' %}">Reservation</a></li>
+                {% if cp_visits.exists %}
+
+                    <li class="nav_link"><a href="{% url 'reservation' %}">Reservation <span class="dot"></span></a></li>
+                {% else %}
+                    <li class="nav_link"><a href="{% url 'reservation' %}">Reservation</a></li>
+                    {% endif %}        
             {% endif %}
             <li class="nav_link">
                 {% if user.is_authenticated %}

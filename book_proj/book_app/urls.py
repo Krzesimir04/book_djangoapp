@@ -6,5 +6,6 @@ urlpatterns=[
     path('logout', logout_view, name='logout'),
     path('register', register, name='register'),
     path('reservation', reservation, name='reservation'),
-    path('reservation/<str:date>', reservation_2, name='reservation_2'),
+    path('reservation/<str:day>', reservation_2, name='reservation_2'),
+    path('cancel/<str:day>/<str:pk>', cancel, name='cancel'),
 ]
