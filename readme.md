@@ -17,3 +17,5 @@ Superuser info:
 username: admin
 
 password: admin
+
+e-mail:admin@gmail.com
