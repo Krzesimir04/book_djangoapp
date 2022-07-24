@@ -18,4 +18,4 @@ username: admin
 
 password: admin
 
-e-mail:admin@gmail.com
+e-mail: admin@gmail.com
