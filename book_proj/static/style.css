@@ -113,6 +113,10 @@ form{
 }
 
 .form_div{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     padding: 2em;
     background-color: rgb(188, 188, 188);
     margin-top: 5em;
