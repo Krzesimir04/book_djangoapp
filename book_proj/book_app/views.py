@@ -61,7 +61,7 @@ def register(request):
                 messages.error(request, 'passwords are not the same')
                 return redirect('register')
         else:
-                messages.error(request, 'form is not valid')
+                messages.error(request, 'form is not valid, password may be too easy')
                 return redirect('register')
     else:
         register_form=Register_form()

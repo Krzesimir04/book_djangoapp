@@ -1,0 +1,11 @@
+Jest to aplikacja, w której po zalogowaniu można umówić się na wizytę do gabinetu fizjoterapeuty.
+
+Stworzyłem ją aby rozwiązać problem dodawania wizyt w sposób prosty i przyjemny dla użytkownika.
+
+Dzisiaj, gdy posiadam już większą wiedzę i umiejętności, rozwiązałbym to w inny sposób, np dodając HTML-owy kalędarz i korzystając z AJAX.
+
+Jednak uważam, że ten projekt był mi potrzebny aby nauczyć się pisać walidatory formularzy oraz modeli, korzystać z procesorów kontekstu,
+przy okazji utrwalając podstawowe umiejętności wykorzystywane w django,takie jak logowanie użytkownika, relacje w bazie danych, tworzenie
+formularzy opartych na modelu, zmiana lokalizacji szablonów i plików statycznych czy napisanie dynamicznych adresów URL.
+
+W css rozwijałem i utrwalałem swoje umiejętności związane z właściwością flex.

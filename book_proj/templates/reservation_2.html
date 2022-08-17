@@ -27,8 +27,8 @@
     </div>
     
     <div class="form_div">
-        <p>Make a reservation</p>
         <form action="" method="post">
+            <p>Make a reservation</p>
             {% csrf_token %}
             {{form}}
             {% for message in messages %}

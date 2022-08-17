@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="content">
-    <div class="block_content" style="height: 80vh ;">
+    <div class="block_content" style="min-height: 80vh;height: auto;">
         <div class="form_div">
             <form action="" method="post">
                 {% csrf_token %}
@@ -16,20 +16,22 @@
                 <input type="submit" class="form_button">
             </form>
         </div>
+    
         {% if cp_visits.exists %}
         <p></p>
-       <p>Your reservations:</p>
-        {% for visit in cp_visits %}
-
-    <div class="visits" style="margin: 0;">
-        <div class="visit_div", style="background-color: rgb(144, 245, 93);">
-            <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>{{visit.Visit_length | floatformat:"-1"}}h</p>
-            <a href="{% url 'cancel' visit.Day visit.id %}">Cancel</a>
+        <p>Your reservations:</p>
+        <div class="visits" style="margin: 0;">
+            {% for visit in cp_visits %}
+            <div class="visit_div", style="background-color: rgb(144, 245, 93);">
+                <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>{{visit.Visit_length | floatformat:"-1"}}h</p>
+                <a href="{% url 'cancel' visit.Day visit.id %}">Cancel</a>
+            </div>
+        
+        {% endfor %}
         </div>
     </div>
-    
-        {% endfor %}
+
         {% endif %}
-    </div>
+    
 </div>
 {% endblock %}
