@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Choose date</p>
+        {{form}}
+        {% for message in messages %}
+        <p class="message_error">{{message}}</p>
+        {% endfor %}
+        <input type="submit" class="form_button">
+    </form>
+
+    {% if cp_visits.exists %}
+    <p>Your reservations:</p>
+    <div class="visits" style="margin: 0;">
+        {% for visit in cp_visits %}
+        <div class="visit-div", style="background-color: rgb(144, 245, 93);">
+            <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>{{visit.Visit_length | floatformat:"-1"}}h</p>
+            <a href="{% url 'cancel' pk=visit.id %}">Cancel</a>
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
