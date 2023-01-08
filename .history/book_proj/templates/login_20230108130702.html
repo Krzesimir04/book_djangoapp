@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}Login{% endblock %}
-{% block main %}
-<div class="single-form">
+
 {% block header %}
     <h1>Login</h1>
     <h3>After that you can book yout visit</h3>
 {% endblock %}
 {% block content %}
-        <form action="" method="post">
+    <div class="reservations">
+        <form class="single-form" action="" method="post">
             {% csrf_token %}
             {{form.email.label}}
             {{form.email}}
@@ -21,7 +21,6 @@
             {% endfor %}
             <input type="submit" class="form_button">
         </form>
+    </div>
 
-        {% endblock %}
-</div>
 {% endblock %}

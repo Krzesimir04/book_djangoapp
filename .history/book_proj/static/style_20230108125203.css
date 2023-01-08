@@ -7,21 +7,10 @@
         z-index: 1;
     }
     50%{
-        transform: translateY(2.7em);
+    transform: translateY(2.6em);
     }
     100%{
-        transform: translateY(0);
-    }
-}
-@keyframes turn {
-    0%{
-        transform: rotateY(0deg);
-    }
-    50%{
-        transform: rotateY(90deg);
-    }
-    100%{
-        transform: rotateY(0deg);
+    transform: translateY(0);
     }
 }
 *{
@@ -83,19 +72,18 @@ a{
     position: absolute;
     width: 100%;
     height: 3%;
-    background-color:#000;
+    background: linear-gradient(90deg, rgba(2, 158, 220,0) 0%, rgba(0,0,0,1) 50%, rgba(2, 158, 220,0) 100%);
     top:0;
     right: 0;
     z-index: -1;
+    transition: transform 0.5s ease-in-out;
 }
 .button:hover{
     background-color: rgb(2, 158, 220);
 }
 .button:hover::before{
     z-index:1;
-    animation-name: cut;
-    animation-duration: 3s;
-    animation-iteration-count: infinite;
+    transform: translateY(2.6em);
 }
 img{
     height:450px;
@@ -113,10 +101,6 @@ span{
     display: flex;
     justify-content: center;
     align-items: center;
-    animation-name: turn;
-    animation-iteration-count: infinite;
-    animation-duration: 5s;
-    animation-timing-function: linear;
 }
 .icon{
     position: static;
@@ -178,16 +162,12 @@ input{
     font-weight: bold;
 }
 /*change width*/
-.reservations,.single-form{
+.reservations{
     display: flex;
     margin: auto;
     width: 80vw;
     justify-content: space-between;
     align-items: center
-}
-.single-form{
-    justify-content: center;
-    flex-direction: column;
 }
 .reservations h3{
     text-align: center;

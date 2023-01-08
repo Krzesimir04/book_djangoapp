@@ -171,6 +171,9 @@ form{
     position: relative;
     top: 0%;
 }
+.single-form{
+    justify-self: center;
+}
 input{
     margin: 0.6em;
     padding: 0.4em;
@@ -178,16 +181,12 @@ input{
     font-weight: bold;
 }
 /*change width*/
-.reservations,.single-form{
+.reservations{
     display: flex;
     margin: auto;
     width: 80vw;
     justify-content: space-between;
     align-items: center
-}
-.single-form{
-    justify-content: center;
-    flex-direction: column;
 }
 .reservations h3{
     text-align: center;

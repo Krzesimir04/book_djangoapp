@@ -14,16 +14,14 @@
     }
 }
 @keyframes turn {
-    0%{
+    from{
         transform: rotateY(0deg);
     }
-    50%{
+    to{
         transform: rotateY(90deg);
     }
-    100%{
-        transform: rotateY(0deg);
     }
-}
+
 *{
     font-family: 'lato';
     margin: 0%;
@@ -115,7 +113,7 @@ span{
     align-items: center;
     animation-name: turn;
     animation-iteration-count: infinite;
-    animation-duration: 5s;
+    animation-duration: 3s;
     animation-timing-function: linear;
 }
 .icon{
@@ -178,16 +176,12 @@ input{
     font-weight: bold;
 }
 /*change width*/
-.reservations,.single-form{
+.reservations{
     display: flex;
     margin: auto;
     width: 80vw;
     justify-content: space-between;
     align-items: center
-}
-.single-form{
-    justify-content: center;
-    flex-direction: column;
 }
 .reservations h3{
     text-align: center;

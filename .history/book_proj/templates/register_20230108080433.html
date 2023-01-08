@@ -3,14 +3,13 @@
 
 {% block title %}Register{% endblock %}
 
-{% block main %}
-<div class="single-form">
 {% block header %}
     <h1>Register</h1>
     <h3>After that you can book yout visit</h3>
 {% endblock %}
 
 {% block content %}
+<div class="reservations">
     <form action="" method="post">
         {% csrf_token %}
         {{form.username.label}}
@@ -27,6 +26,5 @@
         {% endfor %}
         <input type="submit" class="form_button">
     </form>
-    {% endblock %}
 </div>
 {% endblock %}

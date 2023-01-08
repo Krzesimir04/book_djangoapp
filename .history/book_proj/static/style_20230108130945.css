@@ -187,7 +187,6 @@ input{
 }
 .single-form{
     justify-content: center;
-    flex-direction: column;
 }
 .reservations h3{
     text-align: center;
