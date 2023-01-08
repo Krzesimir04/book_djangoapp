@@ -215,6 +215,9 @@ article{
     width: 400px;
     height: 300px;
 }
+.single-form{
+    width: auto;
+}
 .reservations{
     justify-content: space-around;
     width: auto;
