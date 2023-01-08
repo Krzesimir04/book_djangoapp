@@ -46,21 +46,22 @@ def register(request):
     if not request.user.is_authenticated:
         if request.method=='POST':
             register_form=Register_form(request.POST)
-            email=register_form.cleaned_data.get('email')
-            password1=register_form.cleaned_data.get('password1')
-            password2=register_form.cleaned_data.get('password2')
-            if User.objects.filter(email=email).exists():
-                messages.info(request,'there already is user with this email, please change your email')
-                return redirect('register')
-            if password1==password2:
-                register_form.save()
-                user=User.objects.get(email=email)
-                if check_password(password1,encoded=user.password):
-                    login(request, user)
-                    return redirect('index')
-                else:
-                    messages.error(request,'try to log in')
-                    return redirect('login')
+            if register_form.is_valid():
+                email=register_form.cleaned_data.get('email')
+                password1=register_form.cleaned_data.get('password1')
+                password2=register_form.cleaned_data.get('password2')
+                if User.objects.filter(email=email).exists():
+                    messages.info(request,'there already is user with this email, please change your email')
+                    return redirect('register')
+                if password1==password2:
+                    register_form.save()
+                    user=User.objects.get(email=email)
+                    if check_password(password1,encoded=user.password):
+                        login(request, user)
+                        return redirect('index')
+                    else:
+                        messages.error(request,'try to log in')
+                        return redirect('login')
             else:
                 messages.error(request, 'passwords are not the same')
                 return redirect('register')
