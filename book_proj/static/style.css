@@ -215,7 +215,13 @@ article{
     width: 400px;
     height: 300px;
 }
-
+.reservations{
+    justify-content: space-around;
+    width: auto;
+}
+.visit-div{
+    width: 20vw;
+}
 main{
     min-height: 86vh;
     padding:  1em 20% 0 20%;
