@@ -21,7 +21,7 @@
     </form>
 
     {% if cp_visits.exists %}
-    <div class="visits" style="margin: 0;">
+    <div class="visits">
     <h3>Your reservations:</h3>
         {% for visit in cp_visits %}
         <div class="visit-div", style="background-color: rgb(144, 245, 93);">
@@ -31,7 +31,9 @@
         {% endfor %}
     </div>
     {% else %}
+    <div class="visits">
         <h3>Here will be your reservation</h3>
+    </div>
     {% endif %}
 </div>
 {% endblock %}
