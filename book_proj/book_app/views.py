@@ -63,7 +63,12 @@ def register(request):
                         messages.error(request,'try to log in')
                         return redirect('login')
             else:
-                messages.error(request, 'passwords are not the same')
+                password1=request.POST['password1']
+                password2=request.POST['password2']
+                if password1!=password2:
+                    messages.error(request, 'passwords are not the same')
+                else:
+                    messages.error(request, 'wrong email')
                 return redirect('register')
         else:
             register_form=Register_form()
