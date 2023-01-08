@@ -25,11 +25,11 @@
             {% endif %}
             <nav>
             {% if user.is_authenticated %}
-            <a class="button" href="{% url 'logout' %}">logout</a>
+            <a class="button" href="{% url 'logout' %}">Logout</a>
             <a class="button" href="{% url 'reservation' %}">Reservation</a>
             {% else %}
-                <a class="button" href="{% url 'login' %}">login</a>
-                <a class="button" href="{% url 'register' %}">register</a>
+                <a class="button" href="{% url 'login' %}">Login</a>
+                <a class="button" href="{% url 'register' %}">Register</a>
             {% endif %}
             </nav>
         {% endblock %}
@@ -70,8 +70,8 @@
                 <a href="{% url 'logout' %}">logout</a>
                 <a href="{% url 'reservation' %}">Reservation</a>
                 {% else %}
-                    <a href="{% url 'login' %}">login</a>
-                    <a href="{% url 'register' %}">register</a>
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'register' %}">Register</a>
                 {% endif %}
             </div>
             <p>Tel.: +48 660 258 651</p>
