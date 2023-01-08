@@ -6,61 +6,73 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>{% block title %}Book site{% endblock %}</title>
+    <title>{% block title %}Physiotherapist{% endblock %}</title>
 </head>
 <body>
-    {% block body %}
-    <nav>
-        <ul>
-            <li><a href="{% url 'index' %}#main">Main</a></li>
-            <li><a href="{% url 'index' %}#about_me">About me</a></li>
-            <li><a href="{% url 'index' %}#contact">Contact</a></li>
-            {% if user.is_authenticated %}
-                {% if cp_visits.exists %}
-
-                    <li><a href="{% url 'reservation' %}">Reservation <span class="dot"></span></a></li>
-                {% else %}
-                    <li><a href="{% url 'reservation' %}">Reservation</a></li>
-                    {% endif %}
-            {% endif %}
-            <li>
-                {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}">Logout</a>
-                    {% else %}
-                    <a href="{% url 'login' %}">Login</a>
-                    {% endif %}
-                 or <a href="{% url 'register' %}">register</a></li>
-        </ul>
-    </nav>
     <main>
-        {% block content %}
-            <section id="main">
-                <p style="font-size: 2em;">
-                    {% if user.is_authenticated %}
-                    <h1>Welcome {{user.username}}!</h1>
-                    {% else %}
-                    <h1>Welcome!</h1>
-                    {% endif %}
-                </p><br>
-                <p>My name is Krzesimir Makowski and I am a physiotherapist, if you want to <a href="{% url 'reservation' %}">book your term</a> you have to <a href="{% url 'login' %}">log in</a>.</p>
-            </section>
-
-            <section id="about_me">
-                <img src="{% static 'Krzesimir Makowski.jpg' %}" alt="blank">
-                <p>I am a physiotherapist ... Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum quo ducimus optio, unde illo eos, doloremque, vero ea hic nemo aspernatur dolore rem commodi nisi quod? Sequi possimus deserunt tempore!</p>
-            </section>
-
-            <section id="contact">
+        <header>
+            {% block header %}
+            <h1>Get rid of pain or just relax in physiotherapist salon</h1>
+            {% if user.is_authenticated %}
+            {% if cp_visits.exists %}
+            <h3>You have a reservation</h3>
+            {% else %}
+            <h3>On this website you can book your visit.</h3>
+            {% endif %}
+            {% else %}
+            <h3>On this website you can book your visit before you login.</h3>
+            {% endif %}
+            <nav>
+            {% if user.is_authenticated %}
+            <a class="button" href="{% url 'logout' %}">logout</a>
+            <a class="button" href="{% url 'reservation' %}">Reservation</a>
+            {% else %}
+                <a class="button" href="{% url 'login' %}">login</a>
+                <a class="button" href="{% url 'register' %}">register</a>
+            {% endif %}
+            </nav>
+        {% endblock %}
+    </header>
+    {% block content %}
+    <img src="{% static 'man.jpg' %}" alt="photo">
+        <section>
+            <article id="about-me">
+                <span><img alt="icon" src="{% static 'user(1).png' %}" class="icon"></span>
+                <h2>About me</h2>
+                <p>My name is Krzesimir Makowski and I am a physiotherapist.</p>
+            </article>
+            <article id="offer">
+                <span><img alt="icon" src="{% static 'planning.png' %}" class="icon"></span>
+                <h2>Offer</h2>
+                <ul>
+                    <li>Stone massage</li>
+                    <li>Relax massage</li>
+                    <li>therapeutic massage</li>
+                </ul>
+            </article>
+            <article id="contact">
+                <span><img alt="icon" src="{% static 'telephone.png' %}" class="icon"></span>
+                <h2>Contact</h2>
                 <p>Tel.: +48 660 258 651</p>
-                <p>e-mail: krzesimir.makowski@protonmail.com</p>
-                <p>Address: 62-300 Września, ul. W. Dondajewskiego 26</p>
-            </section>
-
-            {% endblock %}
+                <p>E-mail: krzesimir.makowski@protonmail.com</p>
+                <p>Address: 62-300 Września, <br>ul. W.Dondajewskiego 26</p>
+            </article>
+        </section>
+        {% endblock %}
         </main>
         <footer>
-            &copy Krzesimir Makowski 2022
+            <p>&copy Krzesimir Makowski 2023</p>
+            <div>
+                <a href="{% url 'index' %}">Main page</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">logout</a>
+                <a href="{% url 'reservation' %}">Reservation</a>
+                {% else %}
+                    <a href="{% url 'login' %}">login</a>
+                    <a href="{% url 'register' %}">register</a>
+                {% endif %}
+            </div>
+            <p>Tel.: +48 660 258 651</p>
         </footer>
-    {% endblock %}
 </body>
 </html>

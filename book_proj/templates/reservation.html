@@ -2,25 +2,36 @@
 
 {% block title %}Reservation{% endblock %}
 
+{% block header %}
+    <h1>Choose a day of visit</h1>
+    <h3>then you can choose an hour or back to the <a href="{% url 'index' %}">Main page</a></h3>
+{% endblock %}
+
 {% block content %}
+<div class="reservations">
     <form action="" method="post">
         {% csrf_token %}
         <p>Choose date</p>
-        {{form}}
         {% for message in messages %}
-        <p class="message_error">{{message}}</p>
+            <p class="message_error">{{message}}</p>
         {% endfor %}
+        {{ form }}
+
         <input type="submit" class="form_button">
     </form>
 
     {% if cp_visits.exists %}
-    <p>Your reservations:</p>
     <div class="visits" style="margin: 0;">
+    <h3>Your reservations:</h3>
         {% for visit in cp_visits %}
         <div class="visit-div", style="background-color: rgb(144, 245, 93);">
             <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>{{visit.Visit_length | floatformat:"-1"}}h</p>
             <a href="{% url 'cancel' visit.id %}">Cancel</a>
         </div>
         {% endfor %}
+    </div>
+    {% else %}
+        <h3>Here will be your reservation</h3>
     {% endif %}
+</div>
 {% endblock %}

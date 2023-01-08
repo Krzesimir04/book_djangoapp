@@ -11,31 +11,31 @@ def index(request):
     return render(request, 'index.html')
 
 def login_view(request):
-    if request.method=='POST':
-        login_form=Login_form(request.POST)
-        if login_form.is_valid():
-
-            email=login_form.cleaned_data.get("email")
-            password=login_form.cleaned_data.get("password")
-            try:
-                user=User.objects.get(email=email)
-                if check_password(password,encoded=user.password):
-                    login(request, user)
-                    return redirect('index')
-                else:
-                    messages.error(request,'Email or password doesn\'t match')
+    if not request.user.is_authenticated:
+        if request.method=='POST':
+            login_form=Login_form(request.POST)
+            if login_form.is_valid():
+                email=login_form.cleaned_data.get("email")
+                password=login_form.cleaned_data.get("password")
+                try:
+                    user=User.objects.get(email=email)
+                    if check_password(password,encoded=user.password):
+                        login(request, user)
+                        return redirect('index')
+                    else:
+                        messages.error(request,'Email or password doesn\'t match')
+                        return redirect('login')
+                except (User.DoesNotExist, IndexError):
+                    messages.error(request,'User with that email does not exist')
                     return redirect('login')
-            except (User.DoesNotExist, IndexError):
-                messages.error(request,'User with that email does not exist')
+            else:
+                messages.error(request,'Form is not valid')
                 return redirect('login')
         else:
-            messages.error(request,'Form is not valid')
-            return redirect('login')
-
+            login_form=Login_form()
+        return render(request, 'login.html', {'form':login_form})
     else:
-        login_form=Login_form()
-
-    return render(request, 'login.html', {'form':login_form})
+        return redirect('index')
 
 
 def logout_view(request):
@@ -43,9 +43,9 @@ def logout_view(request):
     return redirect('index')
 
 def register(request):
-    if request.method=='POST':
-        register_form=Register_form(request.POST)
-        if register_form.is_valid():
+    if not request.user.is_authenticated:
+        if request.method=='POST':
+            register_form=Register_form(request.POST)
             email=register_form.cleaned_data.get('email')
             password1=register_form.cleaned_data.get('password1')
             password2=register_form.cleaned_data.get('password2')
@@ -54,17 +54,21 @@ def register(request):
                 return redirect('register')
             if password1==password2:
                 register_form.save()
-                messages.success(request, 'Account has been created')
-                return redirect('login')
+                user=User.objects.get(email=email)
+                if check_password(password1,encoded=user.password):
+                    login(request, user)
+                    return redirect('index')
+                else:
+                    messages.error(request,'try to log in')
+                    return redirect('login')
             else:
                 messages.error(request, 'passwords are not the same')
                 return redirect('register')
         else:
-                messages.error(request, 'form is not valid, password may be too easy')
-                return redirect('register')
+            register_form=Register_form()
+            return render(request, 'register.html', {'form':register_form})
     else:
-        register_form=Register_form()
-        return render(request, 'register.html', {'form':register_form})
+        return redirect('index')
 
 @login_required(login_url='login')
 def reservation(request):
@@ -74,8 +78,8 @@ def reservation(request):
             day=form.cleaned_data.get('Day')
             return redirect(f'reservation/{day}')
         else:
-            messages.error(request, 'form is not valid, you have to choose the future date')
-            return redirect('reservation')
+            print(form.errors)
+            return render (request, 'reservation.html',{'form':form})
     else:
         form=Day_of_visit()
     return render (request, 'reservation.html',{'form':form})
@@ -89,17 +93,16 @@ def reservation_2(request,day):
             Visit.objects.create(User=None,Day=day,Term=time,Visit_length=1.0)
         visits=Visit.objects.filter(Day=day)
 
-    return render(request,'reservation_2.html',{'visits':visits})
+    return render(request,'reservation_2.html',{'visits':visits,'day':day})
 
 @login_required(login_url='login')
 def make_reservation(request,pk):
-    if request.user is not None:
-        users_visits=Visit.objects.filter(User=request.user)
-        if users_visits.count()<5:
-            visit=Visit.objects.filter(id=pk)
-            visit.update(User=request.user)
-    messages.error(request, 'You can have booked only 5 visits now')
-
+    users_visits=Visit.objects.filter(User=request.user)
+    if users_visits.count()<5:
+        visit=Visit.objects.filter(id=pk)
+        visit.update(User=request.user)
+    else:
+        messages.error(request, 'You can have booked only 5 visits now')
     return redirect('reservation')
 
 @login_required(login_url='login')
