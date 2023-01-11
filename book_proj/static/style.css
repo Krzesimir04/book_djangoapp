@@ -15,13 +15,13 @@
 }
 @keyframes pulse {
     0%{
-        box-shadow: 0 0 0 0 black;
+        opacity: 0;
     }
     50%{
-        box-shadow: 0 0 10px 1px black;
+        opacity: 1;
     }
     100%{
-        box-shadow: 0 0 0 0 black;
+        opacity: 0;
     }
 }
 *{
@@ -74,11 +74,22 @@ a{
     background-color: rgb(5, 182, 252);
     width: 5.5em;
     text-decoration: none;
+    position: relative;
     padding: 0.8em;
     margin-right: 1em;
 }
-.button:hover{
-    background-color: rgb(2, 158, 220);
+.button::after{
+    content:'';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 10px 3px black;
+    opacity: 0;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+.button:hover::after{
     animation: pulse 2s ease-in-out  infinite;
 }
 img{
