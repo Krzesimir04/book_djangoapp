@@ -92,6 +92,9 @@ a{
 .button:hover::after{
     animation: pulse 2s ease-in-out  infinite;
 }
+.button:hover{
+    background-color: rgb(3, 164, 228);
+}
 img{
     height:450px;
     position: absolute;
