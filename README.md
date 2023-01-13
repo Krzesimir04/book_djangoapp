@@ -41,4 +41,4 @@ If you are on windows use `./env/Scripts/activate` instad of `source env/bin/act
 
 - You can book only 5 visits
 - Password validation is turned off
-- Python version use with django: https://docs.djangoproject.com/en/4.1/faq/install/#what-python-version-can-i-use-with-django
+- Python versions used with django: https://docs.djangoproject.com/en/4.1/faq/install/#what-python-version-can-i-use-with-django
