@@ -25,7 +25,7 @@ At this moment you can choose your visit and book it. Your reservation will be s
 
 
 ## instalation and running on local machine
-If you want to test app on your machine you can download repo, make virtual enviroment, download packages and runserver on your computer.
+If you want to test app on your machine you can download repo, make virtual enviroment, download packages and runserver on your computer (you must have python 3.8 installed).
 ```
 git init
 git pull https://github.com/Krzesimir04/book_djangoapp
@@ -39,5 +39,6 @@ If you are using windows use `./env/Scripts/activate` instad of `source env/bin/
 
 ## Additional information
 
-- You can book only 5 visits.
-- 
+- You can book only 5 visits
+- Password validation is turned off
+- Python version use with django: https://docs.djangoproject.com/en/4.1/faq/install/#what-python-version-can-i-use-with-django
