@@ -13,18 +13,18 @@
         {% for visit in visits %}
         {% if visit.User is not None %}
             {% if visit.User == request.user %}
-                <div class="visit-div", style="background-color: rgb(144, 245, 93);">
-                    <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>{{visit.Visit_length | floatformat:"-1"}}h</p>
+                <div class="visit-div" style="background-color: rgb(144, 245, 93);">
+                    <p>{{visit.Day | date:"d.m.o"}}</p> <p>{{visit.Term | date:"H:i"}}</p> <p>{{visit.Visit_length | floatformat:"-1"}}h</p>
                     <a href="{% url 'cancel' pk=visit.id %}">Cancel</a>
                 </div>
             {% else %}
-                <div class="visit-div", style="background-color: rgb(245, 93, 93);">
-                    <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>Reserved</p>
+                <div class="visit-div" style="background-color: rgb(245, 93, 93);">
+                    <p>{{visit.Day | date:"d.m.o"}} </p> <p>{{visit.Term | date:"H:i"}}</p> <p>Reserved</p>
                 </div>
             {% endif %}
         {% else %}
                 <div class="visit-div">
-                    <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>Free </p><a href="{% url 'make_reservation' pk=visit.id %}">book</a>
+                    <p>{{visit.Day | date:"d.m.o"}}</p> <p>{{visit.Term | date:"H:i"}}</p> <p>Free</p><a href="{% url 'make_reservation' pk=visit.id %}">book</a>
 
                 </div>
         {% endif %}
@@ -35,8 +35,8 @@
         <div class="visits">
             <h3>Your reservations:</h3>
             {% for visit in cp_visits %}
-            <div class="visit-div", style="background-color: rgb(144, 245, 93);">
-                <p>{{visit.Day | date:"d.m.o"}}, </p> <p>{{visit.Term | date:"H:i"}}, </p> <p>{{visit.Visit_length | floatformat:"-1"}}h</p>
+            <div class="visit-div" style="background-color: rgb(144, 245, 93);">
+                <p>{{visit.Day | date:"d.m.o"}}</p> <p>{{visit.Term | date:"H:i"}}</p><p>{{visit.Visit_length | floatformat:"-1"}}h</p>
                 <a href="{% url 'cancel' visit.id %}">Cancel</a>
             </div>
         {% endfor %}
