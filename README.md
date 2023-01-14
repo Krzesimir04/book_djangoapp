@@ -21,11 +21,14 @@ On the next page you can choose when you have time for your massage.
 At this moment you can choose your visit and book it. Your reservation will be seen on the right side of the page and on the main page you will see if you have any reservation (without red frame).
 
 <img src="./img/reservation_2_page.png" alt="Register button" width="800"/>
+
 <img src="./img/visible_reservation.png" alt="Register button" width="400"/>
 
 
-## instalation and running on local machine
+## Installation on local machine
+
 If you want to test app on your machine you can download repo, make virtual enviroment, download packages and runserver on your computer (you must have python 3.8 installed).
+
 ```
 git init
 git pull https://github.com/Krzesimir04/book_djangoapp
