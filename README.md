@@ -1,5 +1,3 @@
-![Baner](./img/Booking_app.png)
-
 # Physiotherapist's website with reservation function
 
 ![main page](./img/main_page.png)
